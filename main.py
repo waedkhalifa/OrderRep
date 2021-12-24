@@ -14,7 +14,7 @@ def purchase(id):
     if reqGET.status_code == 200:
         dataDictionary = reqGET.json()  # content of json as dictionary
         if dataDictionary['quantity'] < 1:
-            return 'Quantity can not be less than 1', 406
+            return '', 406
         else:
             #requests.post('http://192.168.56.103:9000/purchase/{}'.format(id), json=(dataDictionary))
 
