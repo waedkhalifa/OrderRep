@@ -35,7 +35,7 @@ def purchase(id):
                 # to save python obj into file:
                 json.dump(data, f2)# python -->json
                 f2.close()
-                #requests.post('http://192.168.56.103:9000/purchase/'.format(id), json=(dataDictionary))
+                requests.post('http://192.168.56.103:9000/purchaseEdit/'.format(id), json=(dataDictionary))
 
                 return jsonify({'id': id, 'title': dataDictionary['title'], 'price': dataDictionary['price']})
             elif reqPUT.status_code == 404:
@@ -51,6 +51,15 @@ def purchase(id):
     else:
         return 'Status code ' + str(reqGET.status_code) + ' indicates to something ERROR!', reqGET.status_code
 
-
+@app.route('/purchaseEdit/<int:id>',methods=['POST'])  
+def edit(id):
+    result=request.get_json()
+    f = open('ListOfOrders.json', 'r+') 
+    data = json.load(f)
+    requests.post('http://192.168.56.103:9000/purchase/{}'.format(id), json=(dataDictionary))
+    f2 = open('ListOfOrders.json', 'w')
+    json.dump(data, f2)
+    f2.close()
+    return ''
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9999)
